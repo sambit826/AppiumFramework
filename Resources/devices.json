@@ -1,0 +1,25 @@
+{
+	"MOBILE":{
+		
+		"ANDROID":{
+			"BuildFile":"Builds/apk/sample_mobile_app.apk",
+		    "Google_Pixel_5": {
+		      "name": "Google Pixel 5",
+		      "os_version": "12.0"
+		    }
+	    },
+	    "IOS":{
+			"BuildFile":"",
+		    "iPhone_14_Pro_Max": {
+		      "name": "iPhone 14 Pro Max",
+		      "os_version": "16"
+		    }
+	    }
+    },
+    "WEB":{
+    	"CHROME":{
+    		"VERSION":""
+    	}
+    
+    }
+}
