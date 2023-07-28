@@ -25,21 +25,40 @@ import org.apache.http.util.EntityUtils;
 import java.io.File;
 import java.io.IOException;
 
+class InValidBrowserStackCredentials extends Exception{
+	InValidBrowserStackCredentials(String message){
+		super(message);
+	}
+}
+
 public class BrowserStack implements DriverInterface {
-	private static final String BROWSERSTACK_USERNAME = "sambitsenapati_IihGyu";
-	private static final String BROWSERSTACK_ACCESS_KEY = "5qYJxx1hWowEydfMEzbq";
-//	private static final String PLATFORM_NAME = "Android Device";
-//	private static final String DEVICE_NAME = "";
-//	private static final String BROWSER_NAME = "";
-//	private static final String APPIUM_HUB_URL = "http://hub.browserstack.com/wd/hub";
+	private static final String BROWSERSTACK_USERNAME = System.getenv("BROWSERSTACK_USERNAME");//"sambitsenapati_IihGyu";
+	private static final String BROWSERSTACK_ACCESS_KEY = System.getenv("BROWSERSTACK_ACCESS_KEY");//"5qYJxx1hWowEydfMEzbq";
 
 	public static String appURL = "";
 	DesiredCapabilities capabilities = null;
 	HashMap<String, Object> browserstackOptions = new HashMap<>();
 	URL url = null;
 
+	
+	private void validateCredentials() throws InValidBrowserStackCredentials {
+		if (BROWSERSTACK_USERNAME == null || BROWSERSTACK_USERNAME.equals("")) {
+			throw new InValidBrowserStackCredentials("BROWSERSTACK_USERNAME envrionment variable not set");
+		}
+		if (BROWSERSTACK_ACCESS_KEY == null || BROWSERSTACK_ACCESS_KEY.equals("")) {
+			throw new InValidBrowserStackCredentials("BROWSERSTACK_ACCESS_KEY envrionment variable not set");
+		}
+		
+	}
 	@Override
 	public void configureCapabilities() {
+		try {
+			validateCredentials();
+		} catch (InValidBrowserStackCredentials e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			System.exit(1);
+		}
 
 		if(Config.configMap.get("driverType").toLowerCase().equals("mobile")) {
 			configureMobileDesiredCapabilities();
@@ -88,16 +107,8 @@ public class BrowserStack implements DriverInterface {
 
 	public void uploadBuild() {
 
-		String bUserName = BROWSERSTACK_USERNAME;//System.getenv(BROWSERSTACK_USERNAME);
-		String bPassword = BROWSERSTACK_ACCESS_KEY; //System.getenv(BROWSERSTACK_ACCESS_KEY);
-		if (bUserName == null || bUserName.equals("")) {
-			System.out.println("Browserstack username envrionment variable not set");
-			return;
-		}
-		if (bPassword == null || bPassword.equals("")) {
-			System.out.println("Browserstack Password envrionment variable not set");
-			return;
-		}
+		String bUserName = BROWSERSTACK_USERNAME;
+		String bPassword = BROWSERSTACK_ACCESS_KEY;
 
 		String apiKey = bUserName + ":" + bPassword;
 
@@ -154,84 +165,3 @@ public class BrowserStack implements DriverInterface {
 	}
 
 }
-
-//
-//private static final ThreadLocal<AppiumDriver> driver = new ThreadLocal<>();
-//
-//public static AppiumDriver getDriver(){
-//    return driver.get();
-//}
-//
-//public static void setDriver(AppiumDriver driver1){
-//    driver.set(driver1);
-//}
-//
-////@Override
-//public void configure() {
-//	AppiumDriver driver = null;
-//    HashMap<String, Object> browserstackOptions = new HashMap<>();
-//
-//  String device = AutomationHelper.readPropertiesFileValue("Resources/input.properties", "device");
-//  String deviceName = AutomationHelper.parseJson("Resources/mobileDevices.json").get(device).get("name").asText();
-//  String osVersion = AutomationHelper.parseJson("Resources/mobileDevices.json").get(device).get("os_version").asText();
-//  
-//  if(System.getenv("BROWSER_STACK_APP_URL") == null || System.getenv("BROWSER_STACK_APP_URL").equals("")) {
-//	  uploadBuild();
-//  }else {
-//	  appURL = System.getenv("BROWSER_STACK_APP_URL");
-//  }
-//  
-//  capabilities = new DesiredCapabilities();
-//  browserstackOptions.put("projectName", "Project 1");
-//  browserstackOptions.put("buildName", "sample_mobile_app");
-//  browserstackOptions.put("sessionName", "Session 1");
-//  browserstackOptions.put("appiumVersion", "2.0.0");
-//  capabilities.setCapability("bstack:options", browserstackOptions);
-//
-//  capabilities.setCapability("platformName", "android");
-//  capabilities.setCapability("platformVersion", osVersion );
-//  capabilities.setCapability("deviceName", deviceName);
-//  capabilities.setCapability("app", appURL);
-
-//  
-//  try {
-//	  url = new URL("https://"+BROWSERSTACK_USERNAME+":"+BROWSERSTACK_ACCESS_KEY+"@hub-cloud.browserstack.com/wd/hub");
-//} catch (MalformedURLException e) {
-//	// TODO Auto-generated catch block
-//	e.printStackTrace();
-//}
-//  driver = new AndroidDriver(url, capabilities);
-////  setDriver(driver);
-////  getDriver().quit();
-//}
-//
-//
-//
-//
-//
-//
-//
-////
-////@Override
-////public void configure() {
-////	caps = new DesiredCapabilities();
-////    caps.setCapability("browserstack.user", BROWSERSTACK_USERNAME);
-////    caps.setCapability("browserstack.key", BROWSERSTACK_ACCESS_KEY);
-////    caps.setCapability(MobileCapabilityType.PLATFORM_NAME, PLATFORM_NAME);
-////    caps.setCapability(MobileCapabilityType.DEVICE_NAME, DEVICE_NAME);
-////    caps.setCapability(MobileCapabilityType.BROWSER_NAME, BROWSER_NAME);
-////}
-////@Override
-//public void connect() {
-//	try {
-//		driver = new AppiumDriver<MobileElement>(new URL(APPIUM_HUB_URL), caps);
-//	} catch (MalformedURLException e) {
-//		// TODO Auto-generated catch block
-//		e.printStackTrace();
-//	}
-//
-//    // Your test code goes here
-//
-//    driver.quit();
-//	
-//}
