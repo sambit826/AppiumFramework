@@ -89,7 +89,7 @@ public class BrowserStack implements DriverInterface {
 			appURL = System.getenv("BROWSER_STACK_APP_URL");
 		}
 		capabilities = new DesiredCapabilities();
-		browserstackOptions.put("projectName", "Project 1");
+		browserstackOptions.put("projectName", Config.configMap.get("appName"));
 		browserstackOptions.put("buildName", "sample_mobile_app");
 		browserstackOptions.put("sessionName", "Session_app_test");
 		browserstackOptions.put("appiumVersion", "2.0.0");

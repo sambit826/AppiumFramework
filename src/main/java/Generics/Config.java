@@ -13,12 +13,13 @@ public class Config {
 	private String inputProperties = "Resources/input.properties";
 	private String deviceConfig = "Resources/devices.json";
 	public void loadConfig() {
+		String appName = AutomationHelper.readPropertiesFileValue(inputProperties, "appName");
 		String driverType = AutomationHelper.readPropertiesFileValue(inputProperties, "driverType");
 		String executionPlatform = AutomationHelper.readPropertiesFileValue(inputProperties, "platform");
 		String device = AutomationHelper.readPropertiesFileValue(inputProperties, "device");
 		String hub = AutomationHelper.readPropertiesFileValue(inputProperties, "hub");
 
-		
+		configMap.put("appName", appName);
 		configMap.put("driverType", driverType);
 		configMap.put("platform", executionPlatform);
 		configMap.put("device", device);
