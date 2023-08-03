@@ -4,6 +4,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Base64;
 import java.util.HashMap;
+import java.util.concurrent.locks.ReentrantLock;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.remote.DesiredCapabilities;
@@ -30,10 +31,10 @@ class InValidBrowserStackCredentials extends Exception{
 		super(message);
 	}
 }
-
+ 
 public class BrowserStack implements DriverInterface {
-	private static final String BROWSERSTACK_USERNAME = System.getenv("BROWSERSTACK_USERNAME");//"sambitsenapati_IihGyu";
-	private static final String BROWSERSTACK_ACCESS_KEY = System.getenv("BROWSERSTACK_ACCESS_KEY");//"5qYJxx1hWowEydfMEzbq";
+	private static final String BROWSERSTACK_USERNAME = "sambitsenapati_IihGyu"; //System.getenv("BROWSERSTACK_USERNAME");//"sambitsenapati_IihGyu";
+	private static final String BROWSERSTACK_ACCESS_KEY = "5qYJxx1hWowEydfMEzbq"; //System.getenv("BROWSERSTACK_ACCESS_KEY");//"5qYJxx1hWowEydfMEzbq";
 
 	public static String appURL = "";
 	DesiredCapabilities capabilities = null;
@@ -49,7 +50,7 @@ public class BrowserStack implements DriverInterface {
 			throw new InValidBrowserStackCredentials("BROWSERSTACK_ACCESS_KEY envrionment variable not set");
 		}
 		
-	}
+	} 
 	@Override
 	public void configureCapabilities() {
 		try {
@@ -106,7 +107,7 @@ public class BrowserStack implements DriverInterface {
 	}
 
 	public void uploadBuild() {
-
+		
 		String bUserName = BROWSERSTACK_USERNAME;
 		String bPassword = BROWSERSTACK_ACCESS_KEY;
 
