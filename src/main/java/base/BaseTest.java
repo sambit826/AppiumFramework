@@ -28,7 +28,7 @@ public class BaseTest {
 	}
 	@BeforeSuite
 	public void beforeSuite() {
-		initiatePages();
+
 	}
 	
 	
@@ -42,6 +42,7 @@ public class BaseTest {
 		DriverManager.initiateDriver();
 		driver = DriverManager.getDriver();
 		BasePage.driver = driver;
+		initiatePages();
 		
 	}
 	

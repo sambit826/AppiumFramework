@@ -159,6 +159,8 @@ public class BrowserStack implements DriverInterface {
 			appURL = jsonNode.get("app_url").asText();
 
 			System.out.println("appURL: " + appURL);
+			
+			System.out.println("....................");
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

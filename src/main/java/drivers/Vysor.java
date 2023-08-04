@@ -20,9 +20,11 @@ public class Vysor implements DriverInterface {
         capabilities = new DesiredCapabilities();
         capabilities.setCapability("deviceName", Config.configMap.get("deviceName"));
         capabilities.setCapability("platformName", Config.configMap.get("platform").toLowerCase());
-        capabilities.setCapability("app", file.getAbsolutePath()); 
+        capabilities.setCapability("app", file.getAbsolutePath());
+       // System.out.println(file.getAbsolutePath());
         capabilities.setCapability("autoGrantPermissions", true); 
         capabilities.setCapability("appWaitActivity", "com.swaglabsmobileapp.MainActivity");
+        capabilities.setCapability("automationName", "UiAutomator2");
         try {
         	url = new URL("http://localhost:4723/wd/hub");
         } catch (Exception e) {
