@@ -8,17 +8,27 @@ import org.testng.annotations.BeforeSuite;
 import org.testng.annotations.BeforeTest;
 
 import Generics.Config;
+import Generics.SeleniumHelper;
 import drivers.DriverManager;
+import pages.CartsPage;
+import pages.CheckoutPage;
 import pages.LoginPage;
+import pages.ProductsPage;
 
 public class BaseTest {
 	protected WebDriver driver;
 	protected LoginPage loginPage;
 	protected BasePage basePage;
+	protected ProductsPage productsPage;
+	protected CheckoutPage checkoutPage;
+	protected CartsPage cartsPage;
 	
 	public void initiatePages() {
-		loginPage = new LoginPage(); 
 		basePage = new BasePage();
+		loginPage = new LoginPage(); 
+		productsPage = new ProductsPage();
+		checkoutPage = new CheckoutPage();
+		cartsPage = new CartsPage();
 	}
 	
 	@BeforeTest
@@ -41,7 +51,7 @@ public class BaseTest {
 	public void beforeMethod() {
 		DriverManager.initiateDriver();
 		driver = DriverManager.getDriver();
-		BasePage.driver = driver;
+		SeleniumHelper.driver = driver;
 		initiatePages();
 		
 	}

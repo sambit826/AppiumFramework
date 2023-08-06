@@ -18,12 +18,14 @@ public class Config {
 		String executionPlatform = AutomationHelper.readPropertiesFileValue(inputProperties, "platform");
 		String device = AutomationHelper.readPropertiesFileValue(inputProperties, "device");
 		String hub = AutomationHelper.readPropertiesFileValue(inputProperties, "hub");
+		String globalWaitTime = AutomationHelper.readPropertiesFileValue(inputProperties, "globalElementWait");
 
 		configMap.put("appName", appName);
 		configMap.put("driverType", driverType);
 		configMap.put("platform", executionPlatform);
 		configMap.put("device", device);
 		configMap.put("hub", hub);
+		configMap.put("globalWaitTime", globalWaitTime);
 		
 		ObjectMapper objectMapper = new ObjectMapper();
         File jsonFile = new File(deviceConfig);
@@ -39,7 +41,7 @@ public class Config {
             configMap.put("buildFile", buildFile);
 
         } catch (IOException e) {
-            e.printStackTrace();
+            e.printStackTrace(); 
         }
 	}
 }

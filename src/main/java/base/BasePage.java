@@ -1,10 +1,7 @@
 package base;
 
-import org.openqa.selenium.WebDriver;
+import Generics.SeleniumHelper;
 
-import drivers.DriverManager;
-
-public class BasePage {
-	protected static WebDriver driver;
-
+public class BasePage extends SeleniumHelper {
+	
 }
