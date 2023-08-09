@@ -11,7 +11,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 public class Config {
 	public static Map<String, String> configMap = new HashMap<String, String>();
 	private String inputProperties = "Resources/input.properties";
-	private String deviceConfig = "Resources/devices.json";
+	private String deviceConfig = "Re"
+			+ "sources/devices.json";
 	public void loadConfig() {
 		String appName = AutomationHelper.readPropertiesFileValue(inputProperties, "appName");
 		String driverType = AutomationHelper.readPropertiesFileValue(inputProperties, "driverType");

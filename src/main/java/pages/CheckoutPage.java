@@ -50,6 +50,7 @@ public class CheckoutPage extends BasePage {
 	
 	public void clickContinueBtn()
 	{
+		waitForElement(continueBtn);
 		continueBtn.click();
 	}
 	

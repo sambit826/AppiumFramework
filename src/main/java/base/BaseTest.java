@@ -22,6 +22,7 @@ public class BaseTest {
 	protected ProductsPage productsPage;
 	protected CheckoutPage checkoutPage;
 	protected CartsPage cartsPage;
+	protected SeleniumHelper seleniumHelper;
 	
 	public void initiatePages() {
 		basePage = new BasePage();
@@ -29,6 +30,7 @@ public class BaseTest {
 		productsPage = new ProductsPage();
 		checkoutPage = new CheckoutPage();
 		cartsPage = new CartsPage();
+		seleniumHelper = new SeleniumHelper();
 	}
 	
 	@BeforeTest
