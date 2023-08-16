@@ -7,7 +7,7 @@ import org.openqa.selenium.support.PageFactory;
 import base.BasePage;
 
 public class CartsPage extends BasePage{
-	public CartsPage(){
+   	public CartsPage(){
 		PageFactory.initElements(driver, this);
 	}
 	
