@@ -4,7 +4,7 @@ import base.BaseTest;
 
 public class VtechysPageTestCase extends BaseTest {
 
-	@Test(dataProvider = "readData")
+	@Test(dataProvider = "readDataBySheet")
 	public void testExcel(String... args) {
 		double scrollDuration = Double.valueOf(Integer.parseInt(args[1]));
 		chromeBrowserPage.openChromeBrowser();

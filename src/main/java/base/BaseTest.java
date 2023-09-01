@@ -75,5 +75,9 @@ public class BaseTest extends SeleniumHelper {
 		return readFromExcel();
 	}
 	
+	@DataProvider
+	public Object[][] readDataBySheet() {
+		return readFromExcelBySheet();
+	}
 
 }
