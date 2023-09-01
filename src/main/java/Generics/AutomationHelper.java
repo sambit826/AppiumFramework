@@ -4,12 +4,19 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.Properties;
 
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -77,6 +84,52 @@ public class AutomationHelper {
 			e.printStackTrace();
 		}
 		return objArr;
+	}
+	
+	public Map<String,ArrayList<ArrayList<String>>> arrangeDataByExcelSheet(){
+        try {
+            FileInputStream fileInputStream = new FileInputStream("Resources/TestData.xlsx");
+            Workbook workbook = new XSSFWorkbook(fileInputStream);
+            
+            int setCounter = 1;
+            int numberOfSheets = workbook.getNumberOfSheets();
+            Map<String,ArrayList<ArrayList<String>>> mp = new LinkedHashMap<>();
+            ArrayList<ArrayList<String>> arrList = null;
+            for (int rowNumber = 1; ; rowNumber++) {
+                boolean allEmpty = true;
+                arrList = new ArrayList<ArrayList<String>>();
+                for (int sheetIndex = 0; sheetIndex < numberOfSheets; sheetIndex++) {
+                    Sheet sheet = workbook.getSheetAt(sheetIndex);
+                    Row row = sheet.getRow(rowNumber);
+                    if (row != null) {
+                    	ArrayList< String> tmpList = new ArrayList<>();
+                    	for (int i = 0;i<=row.getLastCellNum();i++) {
+	                        Cell cell = row.getCell(i); // Assuming you want the first cell of each row
+	                        if (cell != null) {
+	                            allEmpty = false;
+	                            tmpList.add(cell.toString());
+	                        }
+                    	}
+                    	arrList.add(tmpList);
+                    }
+                }
+                mp.put("Set"+setCounter, arrList);
+                setCounter++;
+                if (allEmpty) {
+                    break; 
+                }
+            }
+            
+            fileInputStream.close();
+            workbook.close();
+            
+            System.out.println(mp);
+    		return mp;
+            
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
 	}
 	
 	 public Object[][] readFromExcelBySheet() {
