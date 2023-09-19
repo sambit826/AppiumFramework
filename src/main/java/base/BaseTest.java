@@ -1,5 +1,8 @@
 package base;
 
+import java.util.ArrayList;
+import java.util.Map;
+
 import org.openqa.selenium.WebDriver;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
@@ -14,6 +17,7 @@ import drivers.DriverManager;
 import pages.CartsPage;
 import pages.CheckoutPage;
 import pages.ChromeBrowserPage;
+import pages.GoogleMapPage;
 import pages.LoginPage;
 import pages.ProductsPage;
 import pages.VtechysPage;
@@ -27,6 +31,7 @@ public class BaseTest extends SeleniumHelper {
 	protected CartsPage cartsPage;
 	protected ChromeBrowserPage chromeBrowserPage;
 	protected VtechysPage vtechysPage;
+	protected GoogleMapPage googleMapPage;
 	
 	
 	public void initiatePages() {
@@ -37,6 +42,7 @@ public class BaseTest extends SeleniumHelper {
 		cartsPage = new CartsPage();
 		chromeBrowserPage = new ChromeBrowserPage();
 		vtechysPage = new VtechysPage();
+		googleMapPage = new GoogleMapPage();
 	}
 	
 	@BeforeTest
@@ -54,8 +60,7 @@ public class BaseTest extends SeleniumHelper {
 	public void beforeClass() {
 		
 	}
-	
-	@BeforeMethod
+//	@BeforeMethod
 	public void beforeMethod() {
 		DriverManager.initiateDriver();
 		driver = DriverManager.getDriver();
@@ -67,7 +72,7 @@ public class BaseTest extends SeleniumHelper {
 	@AfterMethod
 	public void afterMethod() {
 		System.out.println("Quiting driver: " + driver);
-		driver.quit();
+		//driver.quit();
 	}
 	
 	@DataProvider
@@ -75,9 +80,5 @@ public class BaseTest extends SeleniumHelper {
 		return readFromExcel();
 	}
 	
-	@DataProvider
-	public Object[][] readDataBySheet() {
-		return readFromExcelBySheet();
-	}
-
+	
 }

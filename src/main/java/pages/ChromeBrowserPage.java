@@ -165,4 +165,9 @@ public class ChromeBrowserPage extends BasePage {
 		waitForElement(closeAllAppsBtn);
 		closeAllAppsBtn.click();
 	}
+	
+	public void getCurrentPageURL() {
+		String pageUrl = driver.getCurrentUrl();
+		System.out.println(pageUrl);
+	}
 }

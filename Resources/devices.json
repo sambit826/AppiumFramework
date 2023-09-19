@@ -3,8 +3,8 @@
 		
 		"ANDROID":{
 			"BuildFile":"Builds/apk/sample_mobile_app.apk",
-		    "Google_Pixel_5": {
-		      "name": "Google Pixel 5",
+		    "SAMSUNG F62": {
+		      "name": "SAMSUNG F62",
 		      "os_version": "12.0"
 		    }
 	    },

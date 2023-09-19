@@ -27,6 +27,7 @@ public class DriverManager {
 		}
 		d.configureCapabilities();
 		setDriver(d.createDriver());
+		
 
 	}
 }

@@ -23,9 +23,17 @@ public class Vysor implements DriverInterface {
 //        capabilities.setCapability("app", file.getAbsolutePath());
        // System.out.println(file.getAbsolutePath());
         capabilities.setCapability("autoGrantPermissions", true); 
+        capabilities.setCapability("appPackage", "com.google.android.apps.maps");
+        capabilities.setCapability("appActivity", "com.google.android.maps.MapsActivity");
 //        capabilities.setCapability("appWaitActivity", "com.swaglabsmobileapp.MainActivity");
-        capabilities.setCapability("appPackage", "com.android.chrome");
-        capabilities.setCapability("appActivity", "com.google.android.apps.chrome.Main");
+//        if(AppName == "chrome") {
+//        capabilities.setCapability("appPackage", "com.android.chrome");
+//        capabilities.setCapability("appActivity", "com.google.android.apps.chrome.Main");
+//        }
+//        else if(AppName == "map") {
+//        capabilities.setCapability("appPackage", "com.google.android.apps.maps");
+//        capabilities.setCapability("appActivity", "com.google.android.maps.MapsActivity");
+//        }
         capabilities.setCapability("automationName", "UiAutomator2");
         try {
         	url = new URL("http://localhost:4723/wd/hub");

@@ -3,7 +3,7 @@
 <suite name="Suite">
   <test thread-count="5" name="Test">
     <classes>
-      <class name="test.VtechysPageTestCase"/>
+      <class name="test.GoogleMapTestCase"/>
     </classes>
   </test> <!-- Test -->
 </suite> <!-- Suite -->

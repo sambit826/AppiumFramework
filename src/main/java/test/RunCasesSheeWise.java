@@ -8,8 +8,12 @@ public class RunCasesSheeWise extends BaseTest {
 	
 	public void testExcel(ArrayList<String> args) {
 		
-		double scrollDuration = Double.valueOf(Integer.parseInt(args.get(1)));
-		chromeBrowserPage.openChromeBrowser();
+		double scrollDuration  = Double.valueOf(Integer.parseInt(args.get(1)));
+			   System.out.println(scrollDuration);
+			
+			  
+			
+		
 		for (int i = 2; i <= args.size() - 1; i++) {
 			System.out.println("Navigating to page: " + args.get(i));
 			driver.get(args.get(i));
@@ -22,11 +26,13 @@ public class RunCasesSheeWise extends BaseTest {
 	@Test
 	public void runCase() {
 		 Map<String, ArrayList<ArrayList<String>>> arrangeDataByExcelSheet = arrangeDataByExcelSheet();
+		 chromeBrowserPage.openChromeBrowser();
 		for(String arg: arrangeDataByExcelSheet.keySet()) {
 			for(ArrayList<String> caseArgs :arrangeDataByExcelSheet.get(arg) ) {
 				testExcel(caseArgs);
 			}
 			toogleFlightMode();
+			System.out.println("Network Reseting");
 			sleep(5);
 			toogleFlightMode();
 		}
