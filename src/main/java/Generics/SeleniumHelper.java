@@ -128,9 +128,10 @@ public class SeleniumHelper extends AutomationHelper {
 				.androidUIAutomator("new UiScrollable(new UiSelector().scrollable(true)).scrollToEnd(100000)"));
 	}
 	public void changeLocation(double latitude, double longitude, double altitude) {
-		   sleep(2);
+		   sleep(1);
 		   Location location = new Location(latitude, longitude, altitude);
            ((SupportsLocation) driver).setLocation(location);
+           sleep(2);
 	   }
 	
 	public  void scrollToElement(WebDriver driver, String scrollToText, String scrollToAddress, int maxScrollCount) {
@@ -286,14 +287,16 @@ public class SeleniumHelper extends AutomationHelper {
 
 			boolean elementFound = false;
 			int currentScrollCount = 0;
+			sleep(1);
 			while (currentScrollCount < maxScrollCount) {
 				// Check if the element is visible
 				if (isElementVisible(driver, shopName)) {
+					sleep(2);
 					element.click();
 					elementFound = true;
 					break;
 				} else {
-					sleep(1);
+					sleep(2);
 					scrollInTouchAction(driver);
 					currentScrollCount++;
 

@@ -20,7 +20,7 @@ public class GoogleMapPage extends BasePage {
 	private WebElement searchBox;
 	@FindBy(xpath = "//android.widget.Button[@content-desc=\"Back\"]/android.widget.ImageView")
 	private WebElement leftArrow;
-	@FindBy(xpath = "/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.view.ViewGroup/android.view.ViewGroup/android.widget.ScrollView/android.widget.RelativeLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout[2]/android.widget.LinearLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout[2]/android.widget.FrameLayout/android.widget.FrameLayout/android.support.v7.widget.RecyclerView/android.widget.LinearLayout/android.widget.LinearLayout/android.widget.LinearLayout[3]")
+	@FindBy(xpath = "/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.view.ViewGroup/android.view.ViewGroup/android.widget.ScrollView/android.widget.RelativeLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.LinearLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.support.v7.widget.RecyclerView/android.widget.LinearLayout/android.widget.LinearLayout/android.widget.LinearLayout[3]")
 	private WebElement shopUrl;
 	@FindBy(xpath = "//android.view.View[@content-desc=\"Get an Estimate\"]/android.widget.TextView")
 	private WebElement estimateBtn;
@@ -46,6 +46,7 @@ public class GoogleMapPage extends BasePage {
 	    waitForElement(searchBox);
 		searchBox.sendKeys(text);
 		pressKeyboardKey(AndroidKey.ENTER);
+		sleep(2);
 	}
 	public void sendTextToTheSearchBox(String text) {
 		System.out.println(".................searchBox");
@@ -76,15 +77,19 @@ public class GoogleMapPage extends BasePage {
 		boolean elementFound = false;
 		try{
 		  if(shopUrlIsVisible()) {
+			//waitForPage(driver);
+			 sleep(1);
 			waitForElement(shopUrl);
 			shopUrl.click();
 			elementFound = true;
+			
 		  }
 		  else {
 			  sleep(1);
-			  scrollInTouchAction(driver);
-				waitForElement(shopUrl);
-				shopUrl.click(); 
+			  scrollInTouchToTheButtom(driver);
+			  System.out.println(shopUrl);
+			  waitForElement(shopUrl);
+		      shopUrl.click();
 		  }
 		}catch(NoSuchElementException e) {
 			System.out.println("2 Element is not found.");
@@ -136,7 +141,7 @@ public class GoogleMapPage extends BasePage {
 	}
 	public boolean shopUrlIsVisible() {
 	 try {
-		element = driver.findElement(By.xpath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.view.ViewGroup/android.view.ViewGroup/android.widget.ScrollView/android.widget.RelativeLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout[2]/android.widget.LinearLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout[2]/android.widget.FrameLayout/android.widget.FrameLayout/android.support.v7.widget.RecyclerView/android.widget.LinearLayout/android.widget.LinearLayout/android.widget.LinearLayout[3]"));
+		element = driver.findElement(By.xpath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.view.ViewGroup/android.view.ViewGroup/android.widget.ScrollView/android.widget.RelativeLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.LinearLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.support.v7.widget.RecyclerView/android.widget.LinearLayout/android.widget.LinearLayout/android.widget.LinearLayout[3]"));
 		 System.out.println(element);
          sleep(1);
         return element.isDisplayed();     //android.widget.TextView[@content-desc=\"Corporate Video Production\"]

@@ -3,8 +3,8 @@
 		
 		"ANDROID":{
 			"BuildFile":"Builds/apk/sample_mobile_app.apk",
-		    "SAMSUNG F62": {
-		      "name": "SAMSUNG F62",
+		    "SAMSUNG F127G": {
+		      "name": "SAMSUNG F127G",
 		      "os_version": "12.0"
 		    }
 	    },

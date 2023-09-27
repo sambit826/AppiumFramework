@@ -15,13 +15,41 @@ public class GoogleMapTestCaseTest extends BaseTest {
 	  Double langitude;
 	  int scrollTimeStart;
 	  int scrollTimeEnd;
+	  long startTime;
+//	  long elapsedTime;
+	  int exicutionCount;
+	  int passedExicutionCount;
+	  int failedExicutionCount;
+	  //long timeLimitMillis = 4 * 60 * 60 * 1000;
+	  int maxExecutionMinutes = 120;
+	  int resetNetworkCount;
+	  int rowCount;
+	
 	  
       @Test
       public void testGoogleMapTestCase() throws Exception {
-    	while(true) { 
+     
+    	  startTime = System.currentTimeMillis();
+	      long timeLimitMillis = 24 * 60 * 60 * 1000;
+	      
+	      while (isWithinMaxExecutionTime()) {
+	    	  int executionCount = 0;
+	            int passCount = 0;
+	            int failCount = 0;
+
+	    	  exicutionCount++;
+//    	  startTime = System.currentTimeMillis();
+//    	  while(true) {
+//    		  elapsedTime = System.currentTimeMillis()-startTime;
+//    		  
+//    		  if(elapsedTime >= timeLimitMillis) {
+//    			  System.out.println("Completed Exicution");
+//    	          System.out.println("Total Exicution ___"+exicutionCount);
+//    			  break;
+//    		  }  
     	  Sheet sheet = getExcelSheet("Resources/GoogleMapTestData.xlsx", "Sheet1");
     	  for (int i = 1; i <= sheet.getLastRowNum(); i++) {
-    		  
+    		 
     		        beforeMethod();
     		        
                     row = sheet.getRow(i);
@@ -46,16 +74,37 @@ public class GoogleMapTestCaseTest extends BaseTest {
         	        	scrollForTimeInTouchAction(driver,generateRndmNumber(scrollTimeStart, scrollTimeEnd));
 	        		    scrollInTouchActionToTheTop(driver);
 	        		    googleMapPage.sendTextToUrlSearchBox((row.getCell(j).getStringCellValue()));
+	        		    System.out.println((row.getCell(j).getStringCellValue()));
 	        		    System.out.println(j);
         	     }
+        	    
         	     chromeBrowserPage.closeAllApps();
-        	     toogleFlightMode();
-        		 System.out.println("Network Resetting");
-        		 toogleFlightMode();
-	        	 driver.quit();    
+        	     driver.quit();
+        	     rowCount++;
+        	     System.out.println(rowCount+"Row completed");
+	        	 //System.out.println(passedExicutionCount+"---Exicution Passed");
       }
-    }	  
-   }	  
+    	  passedExicutionCount++;
+    	  toogleFlightMode();
+ 		 System.out.println("Network Resetting");
+ 		 toogleFlightMode();
+ 		 resetNetworkCount++;
+ 		 System.out.println(resetNetworkCount+"-- TImes Network Resetting");
+     	 
+    	  System.out.println("Passed Exicution--"+passedExicutionCount);
+    	  System.out.println(exicutionCount+"___CompleteExicution");
+    }
+	      System.out.println("Total Executions: " + exicutionCount);
+	        System.out.println("Successful Executions: " + passedExicutionCount);
+	        failedExicutionCount = exicutionCount - passedExicutionCount;
+	        System.out.println("Failed Executions: " + failedExicutionCount);
+  }	
+      private boolean isWithinMaxExecutionTime() {
+          long currentTime = System.currentTimeMillis();
+          long elapsedMinutes = (currentTime - startTime) / (1000 * 60);
+          return elapsedMinutes < maxExecutionMinutes;
+      }
+ 	  
     	  
     	  
     	  
