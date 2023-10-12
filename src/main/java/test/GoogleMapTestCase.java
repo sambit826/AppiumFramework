@@ -21,7 +21,7 @@ public class GoogleMapTestCase extends BaseTest {
         
 		googleMapPage.sendingTextToSearchBox(args.get(0));
 		sleep(5);
-		moveToShopName(driver, args.get(0), ie);
+		googleMapPage.moveToShopName(driver, args.get(0), ie);
 		googleMapPage.clickOnShopUrl();
 		sleep(5);
 		scrollTillTimeWithTouchAction(0.9, driver);

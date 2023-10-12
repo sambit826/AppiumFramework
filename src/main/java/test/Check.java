@@ -69,7 +69,7 @@ import net.sourceforge.htmlunit.corejs.javascript.ast.WhileLoop;
 			                googleMapPage.sendingTextToSearchBox(keywordCell3);
 			                System.out.println(keywordCell3);
 			        		sleep(5);
-			        		moveToShopName(driver, cellValue5,cellValue4 );
+			        		googleMapPage.moveToShopName(driver, cellValue5,cellValue4 );
 			        		System.out.println(cellValue5+cellValue4);
 			        		sleep(2);
 			        		googleMapPage.clickOnShopUrl();

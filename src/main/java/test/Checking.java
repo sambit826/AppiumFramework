@@ -2,6 +2,8 @@ package test;
 
 import java.util.Random;
 
+import org.testng.annotations.Test;
+
 public class Checking {
 	  public static void main(String[] args) {
 	        double eastLongitude =  -73.451132;
@@ -28,5 +30,6 @@ public class Checking {
 	        Random rand = new Random();
 	        return min + (max - min) * rand.nextDouble();
 	    }
+	    
 
 }

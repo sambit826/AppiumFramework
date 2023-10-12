@@ -2,6 +2,8 @@ package test;
 
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
 import org.testng.annotations.Test;
 
 import base.BaseTest;
@@ -25,13 +27,12 @@ public class GoogleMapTestCaseTest extends BaseTest {
 	  int resetNetworkCount;
 	  int rowCount;
 	
-	  
+	 
       @Test
       public void testGoogleMapTestCase() throws Exception {
      
     	  startTime = System.currentTimeMillis();
 	      long timeLimitMillis = 24 * 60 * 60 * 1000;
-	      
 	      while (isWithinMaxExecutionTime()) {
 	    	  int executionCount = 0;
 	            int passCount = 0;
@@ -65,7 +66,8 @@ public class GoogleMapTestCaseTest extends BaseTest {
                     System.out.println("Latitude..."+latitude+"  Longitude...-"+langitude);
                     googleMapPage.clickOnSearchBoxSendText(keyWord);
                     System.out.println("KeyWord..."+keyWord);
-        	        moveToShopName(driver, shopName,scrollCount );
+                    googleMapPage.checkInternetIsWorking();
+                    googleMapPage.moveToShopName(driver, shopName,scrollCount );
                     System.out.println("Shop Name --"+shopName+"Scroll Count--"+scrollCount);
         	        googleMapPage.clickOnShopUrl();
         	        
@@ -79,16 +81,22 @@ public class GoogleMapTestCaseTest extends BaseTest {
         	     }
         	    
         	     chromeBrowserPage.closeAllApps();
+        	     toogleFlightMode();
+        	     sleep(2);
+        	     toogleFlightMode();
+        	     resetNetworkCount++;
+        	     System.out.println("Network Resetting");
+        	     
         	     driver.quit();
         	     rowCount++;
         	     System.out.println(rowCount+"Row completed");
 	        	 //System.out.println(passedExicutionCount+"---Exicution Passed");
       }
     	  passedExicutionCount++;
-    	  toogleFlightMode();
- 		 System.out.println("Network Resetting");
- 		 toogleFlightMode();
- 		 resetNetworkCount++;
+    	 
+ 		
+ 		 
+ 		 
  		 System.out.println(resetNetworkCount+"-- TImes Network Resetting");
      	 
     	  System.out.println("Passed Exicution--"+passedExicutionCount);
@@ -104,7 +112,8 @@ public class GoogleMapTestCaseTest extends BaseTest {
           long elapsedMinutes = (currentTime - startTime) / (1000 * 60);
           return elapsedMinutes < maxExecutionMinutes;
       }
- 	  
+	
+ 	                         
     	  
     	  
     	  

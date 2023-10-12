@@ -3,9 +3,9 @@
 		
 		"ANDROID":{
 			"BuildFile":"Builds/apk/sample_mobile_app.apk",
-		    "SAMSUNG F127G": {
-		      "name": "SAMSUNG F127G",
-		      "os_version": "12.0"
+		     "OPPO_RENO_NAPA": {
+		      "name": "OPPO_RENO_NAPA",
+		      "os_version": "11.0"
 		    }
 	    },
 	    "IOS":{
@@ -18,7 +18,7 @@
     },
     "WEB":{
     	"CHROME":{
-    		"VERSION":""
+    		"VERSION":"" 
     	}
     
     }

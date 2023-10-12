@@ -58,7 +58,7 @@ import io.appium.java_client.touch.WaitOptions;
 import io.appium.java_client.touch.offset.ElementOption;
 import io.appium.java_client.touch.offset.PointOption;
 import pages.GoogleMapPage;
-
+import test.GoogleMapTestCaseTest;
 import io.appium.java_client.TouchAction;
 import io.appium.java_client.android.AndroidDriver;
 
@@ -71,7 +71,7 @@ public class SeleniumHelper extends AutomationHelper {
 	public static WebElement element;
 	private final static PointerInput FINGER = new PointerInput(Kind.TOUCH, "finger");
 	
-
+   //WebElement = driver.finde
 	public boolean waitForElement(WebElement ele) {
 		WebDriverWait wait = new WebDriverWait(driver,
 				Duration.ofSeconds(Integer.parseInt(Config.configMap.get("globalWaitTime"))));
@@ -283,32 +283,34 @@ public class SeleniumHelper extends AutomationHelper {
             ((RemoteWebDriver) driver).perform(Arrays.asList(swipe));
         }
 
-		public void moveToShopName(WebDriver driver, String shopName, int maxScrollCount) throws Exception {
-
-			boolean elementFound = false;
-			int currentScrollCount = 0;
-			sleep(1);
-			while (currentScrollCount < maxScrollCount) {
-				// Check if the element is visible
-				if (isElementVisible(driver, shopName)) {
-					sleep(2);
-					element.click();
-					elementFound = true;
-					break;
-				} else {
-					sleep(2);
-					scrollInTouchAction(driver);
-					currentScrollCount++;
-
-				}
-
-			}
-
-			if (!elementFound) {
-				System.out.println("Element not found after scrolling.");
-
-			}
-		}
+//		public void moveToShopName(WebDriver driver, String shopName, int maxScrollCount) throws Exception {
+//
+//			boolean elementFound = false;
+//			int currentScrollCount = 0;
+//			sleep(1);
+//			while (currentScrollCount < maxScrollCount) {
+//				// Check if the element is visible
+//				if (isElementVisible(driver, shopName)) {
+//					sleep(2);
+//					element.click();
+//					elementFound = true;
+//					break;
+//				} else {
+//					sleep(1);
+//					WebElement viewButton = driver.findElement(By.xpath("//android.widget.Button[@content-desc=\\\"Map view\\\"]"));
+//					waitForElement(viewButton);
+//					scrollInTouchAction(driver);
+//					currentScrollCount++;
+//
+//				}
+//
+//			}
+//
+//			if (!elementFound) {
+//				System.out.println("Element not found after scrolling.");
+//
+//			}
+//		}
         	
         
         public  boolean isElementVisible(WebDriver driver, String shopName) {
@@ -427,6 +429,7 @@ public class SeleniumHelper extends AutomationHelper {
         	    	long startTime = System.currentTimeMillis();
             	    long endTime =  (startTime + (durationInSeconds * 1000));
             	    while (System.currentTimeMillis() < endTime) {
+            	    	sleep(2);
             	    	scrollInTouchAction(driver);
             	    }
             	        }
