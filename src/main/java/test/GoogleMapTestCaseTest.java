@@ -13,8 +13,10 @@ public class GoogleMapTestCaseTest extends BaseTest {
 	  String keyWord;
 	  String shopName;
 	  int scrollCount;
-	  Double latitude;
-	  Double langitude;
+	  double pointALatitude;
+	  double pointALongitude;
+	  double pointBLatitude;
+	  double pointBLongitude;
 	  int scrollTimeStart;
 	  int scrollTimeEnd;
 	  long startTime;
@@ -54,16 +56,17 @@ public class GoogleMapTestCaseTest extends BaseTest {
     		        beforeMethod();
     		        
                     row = sheet.getRow(i);
-                    keyWord = row.getCell(3).getStringCellValue();
-                    shopName = row.getCell(5).getStringCellValue();
-                    scrollCount = (int) row.getCell(4).getNumericCellValue();
-                    latitude = row.getCell(1).getNumericCellValue();
-                    langitude = row.getCell(2).getNumericCellValue();
+                    keyWord = row.getCell(4).getStringCellValue();
+                    shopName = row.getCell(6).getStringCellValue();
+                    scrollCount = (int) row.getCell(5).getNumericCellValue();
+                    pointALatitude = row.getCell(0).getNumericCellValue();
+                    pointALongitude = row.getCell(1).getNumericCellValue();
+                    pointBLatitude = row.getCell(2).getNumericCellValue();
+                    pointBLongitude = row.getCell(3).getNumericCellValue();
                     scrollTimeStart =  (int) row.getCell(7).getNumericCellValue();
-                    scrollTimeEnd = (int) row.getCell(6).getNumericCellValue();
+                    scrollTimeEnd = (int) row.getCell(8).getNumericCellValue();
  
-                    changeLocation(latitude,langitude, 0);
-                    System.out.println("Latitude..."+latitude+"  Longitude...-"+langitude);
+                    changeLocation(generateRandomLatitudeFormP_AToPoint_B(pointALatitude, pointBLatitude),generateRandomLatitudeFormP_AToPoint_B(pointALongitude, pointBLongitude), 0);
                     googleMapPage.clickOnSearchBoxSendText(keyWord);
                     System.out.println("KeyWord..."+keyWord);
                     googleMapPage.checkInternetIsWorking();
@@ -71,7 +74,7 @@ public class GoogleMapTestCaseTest extends BaseTest {
                     System.out.println("Shop Name --"+shopName+"Scroll Count--"+scrollCount);
         	        googleMapPage.clickOnShopUrl();
         	        
-        	        for(int j = 8; j <=row.getLastCellNum()-1 ; j++) {
+        	        for(int j = 9; j <=row.getLastCellNum()-1 ; j++) {
         	        	
         	        	scrollForTimeInTouchAction(driver,generateRndmNumber(scrollTimeStart, scrollTimeEnd));
 	        		    scrollInTouchActionToTheTop(driver);

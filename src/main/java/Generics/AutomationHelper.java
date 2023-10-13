@@ -319,9 +319,20 @@ public class AutomationHelper {
        }
 	return sheet;
    }
-  public void closeExcelSheet(String file_path,String sheetName) {
-	  
-  } 
+   public double generateRandomLatitudeFormP_AToPoint_B(double pointALatitude, double pointBLatitude) {
+	   Random rand = new Random();
+	   double latitude = pointBLatitude + (pointALatitude - pointBLatitude) * rand.nextDouble();
+	   System.out.println("Generating Latiitude"+latitude);
+	   return latitude;
+   }
+   public double generateRandomLongitudeFormP_AToPoint_B(double pointALongitude, double pointBLongitude) {
+	   Random rand = new Random();
+	   double longitude = pointBLongitude + (pointALongitude - pointBLongitude) * rand.nextDouble();
+	   System.out.println("Generating Longitude"+longitude);
+	   return longitude;
+   }
+   
+   
      
   
    
