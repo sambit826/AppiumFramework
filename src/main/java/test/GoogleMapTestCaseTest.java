@@ -50,7 +50,7 @@ public class GoogleMapTestCaseTest extends BaseTest {
 //    	          System.out.println("Total Exicution ___"+exicutionCount);
 //    			  break;
 //    		  }  
-    	  Sheet sheet = getExcelSheet("Resources/GoogleMapTestData.xlsx", "Sheet1");
+    	  Sheet sheet = getExcelSheet("Resources/GoogleMapTestData.xlsx", "Sheet2");
     	  for (int i = 1; i <= sheet.getLastRowNum(); i++) {
     		 
     		        beforeMethod();
@@ -68,8 +68,10 @@ public class GoogleMapTestCaseTest extends BaseTest {
  
                     changeLocation(generateRandomLatitudeFormP_AToPoint_B(pointALatitude, pointBLatitude),generateRandomLatitudeFormP_AToPoint_B(pointALongitude, pointBLongitude), 0);
                     googleMapPage.clickOnSearchBoxSendText(keyWord);
+                    sleep(2);
                     System.out.println("KeyWord..."+keyWord);
                     googleMapPage.checkInternetIsWorking();
+                    //googleMapPage.chnageToDistance();
                     googleMapPage.moveToShopName(driver, shopName,scrollCount );
                     System.out.println("Shop Name --"+shopName+"Scroll Count--"+scrollCount);
         	        googleMapPage.clickOnShopUrl();

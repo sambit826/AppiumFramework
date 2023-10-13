@@ -44,6 +44,12 @@ public class GoogleMapPage extends BasePage {
 	private WebElement webAddressBox;
 	@FindBy(xpath = "//android.widget.Button[@content-desc=\"Map view\"]")
 	private WebElement viewmap;
+	@FindBy(xpath = "//android.widget.Button[@content-desc=\"Close\"]")
+	private WebElement close;
+	@FindBy(xpath = "//android.widget.CompoundButton[@content-desc=\"Relevance\"]")
+	private WebElement sortOption;
+	@FindBy(xpath = "//android.widget.CheckBox[@content-desc=\"Distance\"]")
+	private WebElement distanceBtn;
 	//WebElement
 	
 	public void clickOnSearchBoxSendText(String text) {
@@ -91,6 +97,12 @@ public class GoogleMapPage extends BasePage {
 		waitForElement(leftArrow);
 		leftArrow.click();
 	}
+	public void chnageToDistance() {
+		waitForElement(sortOption);
+		sortOption.click();
+		waitForElement(distanceBtn);
+		distanceBtn.click();
+	}
 	public void clickOnShopUrl() {
 		boolean elementFound = false;
 		try{
@@ -132,12 +144,24 @@ public class GoogleMapPage extends BasePage {
 		
 	}
     public void checkInternetIsWorking() {
-    	
-        while(!viewIsVisible()) {
-    		toogleFlightMode();
-    		sleep(2);
-    		toogleFlightMode();
-    	}
+    	  if(!viewIsVisible()) {
+          	
+      		toogleFlightMode();
+      		sleep(1);
+      		toogleFlightMode();
+      		sleep(1);
+      		
+      	try{
+      	  if(close.isDisplayed()) {
+      		waitForElement(close);
+      		close.click();
+      		sleep(1);
+            }
+      	}
+      	catch(Exception e) {
+      		
+      	}
+      	}
     }
 	public void clickWebTvSeriesVdoProductionLink() {
 		waitForElement(webTvSeriesVdoProductionLink);
