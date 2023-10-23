@@ -166,5 +166,10 @@ public class BrowserStack implements DriverInterface {
 		}
 		return appURL;
 	}
+	@Override
+	public void configureCapabilities(String deviceName, String udid) {
+		// TODO Auto-generated method stub
+		
+	}
 
 }

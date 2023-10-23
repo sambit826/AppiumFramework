@@ -2,8 +2,13 @@
 <!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
 <suite name="Suite">
   <test thread-count="5" name="Test">
-    <classes>
-      <class name="test.GoogleMapTestCaseTest"/>
-    </classes>
+	  <classes>
+            <!-- Add class names here -->
+            <class name="test.GoogleMapTestCaseTest"/>
+            <parameter name="deviceName" value="OPPO RENO NAPA"></parameter>
+            <parameter name="udid" value="72266245408932"></parameter>
+           
+            <!-- Add more classes if needed -->
+        </classes>
   </test> <!-- Test -->
 </suite> <!-- Suite -->

@@ -1,5 +1,7 @@
 package pages;
 
+import java.util.concurrent.TimeUnit;
+
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
@@ -18,7 +20,7 @@ public class GoogleMapPage extends BasePage {
 	
 	@FindBy(xpath = "/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.view.ViewGroup/android.view.ViewGroup/android.widget.FrameLayout[2]/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.RelativeLayout/android.widget.Button")
 	private WebElement skipbutton;
-	@FindBy(xpath = "//android.widget.EditText[@content-desc='Search here']/android.widget.TextView")
+	@FindBy(xpath = "/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.view.ViewGroup/android.view.ViewGroup/android.widget.FrameLayout[3]/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout")
 	private WebElement textBox;
 	@FindBy(xpath = "/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.view.ViewGroup/android.view.ViewGroup/android.widget.FrameLayout[2]/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.EditText/android.widget.EditText")
 	private WebElement searchBox;
@@ -50,9 +52,11 @@ public class GoogleMapPage extends BasePage {
 	private WebElement sortOption;
 	@FindBy(xpath = "//android.widget.CheckBox[@content-desc=\"Distance\"]")
 	private WebElement distanceBtn;
+	
 	//WebElement
 	
 	public void clickOnSearchBoxSendText(String text) {
+	try {	
 	  if(skipbutton.isDisplayed()) {
 		waitForElement(skipbutton);
 		skipbutton.click();
@@ -61,8 +65,23 @@ public class GoogleMapPage extends BasePage {
 	    waitForElement(searchBox);
 		searchBox.sendKeys(text);
 		pressKeyboardKey(AndroidKey.ENTER);
-		sleep(2);
+		sleep(1);
+		//pressKeyboardKey(AndroidKey.SEARCH);
+		System.out.println("searching done");
 	  }
+	  else if (textBox.isDisplayed()) {
+		  waitForElement(textBox);
+		    textBox.click();
+		    waitForElement(searchBox);
+			searchBox.sendKeys(text);
+			pressKeyboardKey(AndroidKey.ENTER);
+			sleep(1);
+	  }
+	} catch (NoSuchElementException t) {
+        // Handle the exception if the elements are not found
+        // For example, you can print an error message or log it
+		System.out.println("Not searching in se");
+    }
 //	    waitForElement(textBox);
 //	    textBox.click();
 //	    waitForElement(searchBox);
@@ -118,6 +137,7 @@ public class GoogleMapPage extends BasePage {
 			  sleep(1);
 			  scrollInTouchToTheButtom(driver);
 			  System.out.println(shopUrl);
+			  driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 			  waitForElement(shopUrl);
 		      shopUrl.click();
 		  }
@@ -144,13 +164,13 @@ public class GoogleMapPage extends BasePage {
 		
 	}
     public void checkInternetIsWorking() {
-    	  if(!viewIsVisible()) {
+    	   while(!viewIsVisible()) {
           	
       		toogleFlightMode();
       		sleep(1);
       		toogleFlightMode();
-      		sleep(1);
-      		
+      		sleep(2);
+      		System.out.println("Network Restarting");
       	try{
       	  if(close.isDisplayed()) {
       		waitForElement(close);
@@ -225,10 +245,10 @@ public class GoogleMapPage extends BasePage {
 				elementFound = true;
 				break;
 			} else {
-				sleep(1);
 				//bElement viewButton = driver.findElement(By.xpath("//android.widget.Button[@content-desc=\\\"Map view\\\"]"));
 				waitForElement(viewmap);
 				scrollInTouchAction(driver);
+				sleep(2);
 				currentScrollCount++;
 
 			}

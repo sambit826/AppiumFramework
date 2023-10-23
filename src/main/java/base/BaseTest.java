@@ -61,8 +61,8 @@ public class BaseTest extends SeleniumHelper {
 		
 	}
 //	@BeforeMethod
-	public void beforeMethod() {
-		DriverManager.initiateDriver();
+	public void beforeMethod(String deviceName, String udid) {
+		DriverManager.initiateDriver( deviceName,  udid);
 		driver = DriverManager.getDriver();
 		SeleniumHelper.driver = driver;
 		initiatePages();

@@ -39,10 +39,10 @@ import net.sourceforge.htmlunit.corejs.javascript.ast.WhileLoop;
 			            //DriverManager.initiateDriver();
 			    		///driver = DriverManager.getDriver();
 		
-			            for (int i = 1; i <= sheet.getLastRowNum(); i++) { // Assuming the first row contains headers
+			            for (int i = 1; i < sheet.getLastRowNum(); i++) { // Assuming the first row contains headers
 			                Row row = sheet.getRow(i);
 			                
-			                DriverManager.initiateDriver();
+			               // DriverManager.initiateDriver();
 				    		driver = DriverManager.getDriver();
 				    		SeleniumHelper.driver = driver;
 				    		initiatePages();

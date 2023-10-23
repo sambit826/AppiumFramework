@@ -22,6 +22,7 @@ import java.util.stream.Collectors;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.Dimension;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Point;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -128,11 +129,26 @@ public class SeleniumHelper extends AutomationHelper {
 				.androidUIAutomator("new UiScrollable(new UiSelector().scrollable(true)).scrollToEnd(100000)"));
 	}
 	public void changeLocation(double latitude, double longitude, double altitude) {
-		   sleep(1);
+		   
 		   Location location = new Location(latitude, longitude, altitude);
            ((SupportsLocation) driver).setLocation(location);
-           sleep(2);
+           sleep(1);
+           
 	   }
+	 public  void scrollForDurationInSeconds(WebDriver driver, int durationInSeconds) {
+	        JavascriptExecutor js = (JavascriptExecutor) driver;
+	        long endTimeMillis = System.currentTimeMillis() + (durationInSeconds * 1000); // Convert seconds to milliseconds
+
+	        while (System.currentTimeMillis() < endTimeMillis) {
+	            // Scroll down the page
+	            js.executeScript("window.scrollBy(0, 500)"); // Adjust the scroll amount as needed
+	            try {
+	                Thread.sleep(1000); // Wait for 1 second before scrolling again
+	            } catch (InterruptedException e) {
+	                e.printStackTrace();
+	            }
+	        }
+	    }
 	
 	public  void scrollToElement(WebDriver driver, String scrollToText, String scrollToAddress, int maxScrollCount) {
         for (int scrollCount = 0; scrollCount < maxScrollCount; scrollCount++) {

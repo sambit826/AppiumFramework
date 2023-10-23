@@ -31,7 +31,7 @@ public class ChromeBrowserTestCase extends BaseTest
 			}
 			driver.quit();
 			sleep(3);
-			beforeMethod();
+			//beforeMethod();
 			j++;
 		}
 

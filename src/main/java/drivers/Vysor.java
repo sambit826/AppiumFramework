@@ -5,21 +5,27 @@ import java.net.URL;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.remote.DesiredCapabilities;
+import org.testng.annotations.Parameters;
+
+import com.beust.jcommander.Parameter;
 
 import Generics.Config;
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.ios.IOSDriver;
+import io.appium.java_client.remote.MobileCapabilityType;
 
 public class Vysor implements DriverInterface {
 	URL url = null;
 	DesiredCapabilities capabilities = null;
-	@Override
-	public void configureCapabilities() {
+	
+	public void configureCapabilities(String deviceName, String udid) {
 		String buildFilePath = Config.configMap.get("buildFile");
 		File file = new File(buildFilePath);
         capabilities = new DesiredCapabilities();
+//        capabilities.setCapability("deviceName", Config.configMap.get("deviceName"));
         capabilities.setCapability("deviceName", Config.configMap.get("deviceName"));
-        capabilities.setCapability("platformName", Config.configMap.get("platform").toLowerCase());
+        capabilities.setCapability("platformName", deviceName);
+        capabilities.setCapability(MobileCapabilityType.UDID, udid);
 //        capabilities.setCapability("app", file.getAbsolutePath());
        // System.out.println(file.getAbsolutePath());
         capabilities.setCapability("autoGrantPermissions", true); 
@@ -35,11 +41,25 @@ public class Vysor implements DriverInterface {
 //        capabilities.setCapability("appActivity", "com.google.android.maps.MapsActivity");
 //        }
         capabilities.setCapability("automationName", "UiAutomator2");
-        try {
-        	url = new URL("http://localhost:4723/wd/hub");
-        } catch (Exception e) {
-            e.printStackTrace();
+        if(udid.equals("72266245408932")) {
+        	 try {
+             	url = new URL("http://localhost:4723/wd/hub");
+             	System.out.println("PORT 4724");
+             } catch (Exception e) {
+                 e.printStackTrace();
+             }
         }
+        
+        else {
+        	try {
+             	url = new URL("http://localhost:4726/wd/hub");
+             	System.out.println("PORT 4726");
+             } catch (Exception e) {
+                 e.printStackTrace();
+             }
+
+		}
+       
     }		
 	
 
@@ -48,6 +68,13 @@ public class Vysor implements DriverInterface {
 		if(Config.configMap.get("platform").toLowerCase().equals("android"))
 			return new AndroidDriver(url, capabilities);
 		return new IOSDriver(url, capabilities);	
+	}
+
+
+	@Override
+	public void configureCapabilities() {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

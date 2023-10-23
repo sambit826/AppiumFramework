@@ -4,6 +4,7 @@ import java.security.PublicKey;
 
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.TimeoutException;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
@@ -70,6 +71,19 @@ public class ChromeBrowserPage extends BasePage {
 
 	@FindBy(xpath = "/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.Button")
 	private WebElement closeAllAppsBtn;
+	
+	@FindBy(xpath = "/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup/android.widget.FrameLayout[2]/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout")
+	private WebElement openTabsBtn;
+	
+	@FindBy(xpath = "//android.widget.TextView[@content-desc=\"Clear browsing data\"]")
+	private WebElement openTabOption;
+	
+	@FindBy(xpath = "/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.view.ViewGroup/android.widget.Button[2]")
+	private WebElement closeAllTabBtn;
+	
+	@FindBy(xpath = "/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup/android.widget.FrameLayout[1]/android.widget.FrameLayout[2]/android.webkit.WebView/android.view.View/android.view.View[3]/android.widget.TextView")
+	private WebElement pageNotFoundLink;
+		
   
 	public void openChromeBrowser() {
 		try {
@@ -169,5 +183,22 @@ public class ChromeBrowserPage extends BasePage {
 	public void getCurrentPageURL() {
 		String pageUrl = driver.getCurrentUrl();
 		System.out.println(pageUrl);
+	}
+	public void closeAllTabInBrowser() {
+		waitForElement(openTabsBtn);
+		openTabsBtn.click();
+		waitForElement(openTabOption);
+		openTabOption.click();
+		waitForElement(closeAllTabBtn);
+		closeAllTabBtn.click();
+	}
+	public void scrollForTimeInTouchActionn(WebDriver driver, int timeInSeconds) {
+		try {
+		if(!pageNotFoundLink.isDisplayed()) {
+			scrollForTimeInTouchAction(driver, timeInSeconds);
+		}
+	 }catch(Exception e) {
+		 
+	 }
 	}
 }
