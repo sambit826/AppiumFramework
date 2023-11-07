@@ -98,8 +98,11 @@ public class SeleniumHelper extends AutomationHelper {
 	}
 
 	public void toogleFlightMode() {
+		((SupportsNetworkStateManagement) driver).toggleAirplaneMode();
 		sleep(1);
 		((SupportsNetworkStateManagement) driver).toggleAirplaneMode();
+		sleep(6);
+		System.out.println("Network Restarting");
 	}
 
 	public void pressKeyboardKey(AndroidKey key) {
@@ -128,13 +131,23 @@ public class SeleniumHelper extends AutomationHelper {
 		driver.findElement(AppiumBy
 				.androidUIAutomator("new UiScrollable(new UiSelector().scrollable(true)).scrollToEnd(100000)"));
 	}
+	
+	//Set location
 	public void changeLocation(double latitude, double longitude, double altitude) {
-		   
+		 try {  
 		   Location location = new Location(latitude, longitude, altitude);
            ((SupportsLocation) driver).setLocation(location);
-           sleep(1);
+           System.out.println(location);
+           System.out.println("Location changed,");
+		 }catch(Exception e) {
+			 System.out.println("Again changing location");
+			 Location location = new Location(latitude, longitude, altitude);
+	           ((SupportsLocation) driver).setLocation(location);
+	           System.out.println(location);
+		 }
            
 	   }
+	
 	 public  void scrollForDurationInSeconds(WebDriver driver, int durationInSeconds) {
 	        JavascriptExecutor js = (JavascriptExecutor) driver;
 	        long endTimeMillis = System.currentTimeMillis() + (durationInSeconds * 1000); // Convert seconds to milliseconds
@@ -256,6 +269,7 @@ public class SeleniumHelper extends AutomationHelper {
                    .moveTo(ElementOption.point(centerX, endY))
                    .release()
                    .perform();
+             System.out.println("Scrolling.....");
         }
         public void scrollInTouchActionToTheTop(WebDriver driver) {
         	int scrollHeight = driver.manage().window().getSize().getHeight();
@@ -442,15 +456,25 @@ public class SeleniumHelper extends AutomationHelper {
         	      }
         	    }
         	    public void scrollForTimeInTouchAction(WebDriver driver,int durationInSeconds) {
-        	    	long startTime = System.currentTimeMillis();
-            	    long endTime =  (startTime + (durationInSeconds * 1000));
-            	    while (System.currentTimeMillis() < endTime) {
-            	    	sleep(2);
-            	    	scrollInTouchAction(driver);
-            	    }
-            	        }
+        	    	WebElement pageNotFoundLink = driver.findElement(By.xpath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup/android.widget.FrameLayout[1]/android.widget.FrameLayout[2]/android.webkit.WebView/android.view.View/android.view.View[3]/android.widget.TextView"));
+        	       
+        	    	 try {
+        	    		    if(!pageNotFoundLink.isDisplayed()) {
+        	    		    	long startTime = System.currentTimeMillis();
+        	    	 	        long endTime =  (startTime + (durationInSeconds * 1000));
+        	    	 	          while (System.currentTimeMillis() < endTime) {
+        	    	 	    	   sleep(2);
+        	    	 	    	     scrollInTouchAction(driver);
+        	    	 	    }
+        	    		    	}
+        	    			 }catch(Exception e) {
+        	    				 
+        	    			 }
+        	    	 	        }
+}
+            	        
         
 
 
-}
+
 

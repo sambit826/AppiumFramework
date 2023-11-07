@@ -36,9 +36,10 @@ public class GoogleMapTestCaseTest extends BaseTest {
       @Test
       public void testGoogleMapTestCase(String deviceName, String udid) throws Exception {
      
-    	  startTime = System.currentTimeMillis();
-	      long timeLimitMillis = 24 * 60 * 60 * 1000;
-	      while (isWithinMaxExecutionTime()) {
+//    	  startTime = System.currentTimeMillis();
+//	      //long timeLimitMillis = 24 * 60 * 60 * 1000;
+//    	  double timeLimitMillis =  (1.5 * 60 * 60 * 1000);
+//	      while (isWithinMaxExecutionTime()) {
 	    	  int executionCount = 0;
 	            int passCount = 0;
 	            int failCount = 0;
@@ -55,8 +56,8 @@ public class GoogleMapTestCaseTest extends BaseTest {
 //    	          System.out.println("Total Exicution ___"+exicutionCount);
 //    			  break;
 //    		  }  
-    	  Sheet sheet = getExcelSheet("Resources/GoogleMapTestData.xlsx", "Sheet1");
-    	  for (int i = 1; i <sheet.getLastRowNum()-1; i++) {
+    	  Sheet sheet = getExcelSheet("Resources/GoogleMapTestData.xlsx", "Sheet3");
+    	  for (int i = 1; i <sheet.getLastRowNum(); i++) {
     		 
     		        beforeMethod( deviceName,  udid);
     		        
@@ -75,27 +76,29 @@ public class GoogleMapTestCaseTest extends BaseTest {
                     
                     //Network Reset
                     toogleFlightMode();
-           	        sleep(2);
-           	        System.out.println("Network Resetting");
-           	        toogleFlightMode();
-           	        
+         
            	     //Change Location
+           	        //sleep(1);
+                    //driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
                     changeLocation(generateRandomLatitudeFormP_AToPoint_B(pointALatitude, pointBLatitude),generateRandomLatitudeFormP_AToPoint_B(pointALongitude, pointBLongitude), 0);
-                    sleep(2);
+                    //sleep(2);
                     
            	        //keyword search
                     driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+                    
                     googleMapPage.clickOnSearchBoxSendText(keyWord);
                     System.out.println("KeyWord..."+keyWord);
+                    
+                    driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
                    // googleMapPage.checkInternetIsWorking();
                     
                     //Sorting with distance
                     //googleMapPage.chnageToDistance();
-                    
+                    sleep(4);
                     //Scroll to find shop name
                     googleMapPage.moveToShopName(driver, shopName,scrollCount );
                     System.out.println("Shop Name --"+shopName+"Scroll Count--"+scrollCount);
-                    System.out.println("Shop Name Found- "+shopName);
+                   
                     
                     //Navigate to Shop GMB
         	        googleMapPage.clickOnShopUrl();
@@ -105,9 +108,9 @@ public class GoogleMapTestCaseTest extends BaseTest {
         	        for(int j = 9; j <=row.getLastCellNum()-1 ; j++) {
         	        	driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
         	        	sleep(2);
-        	        	//chromeBrowserPage.scrollForTimeInTouchActionn(driver, generateRndmNumber(scrollTimeStart, scrollTimeEnd));
+        	        	chromeBrowserPage.scrollForTimeInTouchAction(driver, generateRndmNumber(scrollTimeStart, scrollTimeEnd));
         	        	//scrollForDurationInSeconds(driver, generateRndmNumber(scrollTimeStart, scrollTimeEnd));
-        	        	scrollForTimeInTouchAction(driver,generateRndmNumber(scrollTimeStart, scrollTimeEnd));
+        	        	//scrollForTimeInTouchAction(driver,generateRndmNumber(scrollTimeStart, scrollTimeEnd));
         	        	//scrollForTime(generateRndmNumber(scrollTimeStart, scrollTimeEnd));
 	        		    scrollInTouchActionToTheTop(driver);
 	        		    sleep(2);
@@ -125,25 +128,28 @@ public class GoogleMapTestCaseTest extends BaseTest {
         	       sleep(1);
         	       
         	       //Close all the tabs
-        	     chromeBrowserPage.closeAllTabInBrowser();
+        	     //chromeBrowserPage.closeAllTabInBrowser();
         	     System.out.println("All tabs clear");
         	     
         	     //Close all Apps
         	     chromeBrowserPage.closeAllApps();
         	     System.out.println("Closed all app");
         	     
+        	     
+        	     
         	     //Network Reset
-        	     toogleFlightMode();
-        	     sleep(2);
-        	     toogleFlightMode();
+        	     //toogleFlightMode();
+        	     //sleep(3);
+        	     //toogleFlightMode();
         	    
         	     resetNetworkCount++;
-        	     System.out.println("Network Resetting");
+        	     
         	     
         	     driver.quit();
         	     rowCount++;
         	     System.out.println(rowCount+"Row completed");
-	        	 //System.out.println(passedExicutionCount+"---Exicution Passed");
+        	     
+	        	
       }
     	  passedExicutionCount++;
     	 
@@ -155,16 +161,16 @@ public class GoogleMapTestCaseTest extends BaseTest {
     	  System.out.println("Passed Exicution--"+passedExicutionCount);
     	  System.out.println(exicutionCount+"___CompleteExicution");
     }
-	      System.out.println("Total Executions: " + exicutionCount);
-	        System.out.println("Successful Executions: " + passedExicutionCount);
-	        failedExicutionCount = exicutionCount - passedExicutionCount;
-	        System.out.println("Failed Executions: " + failedExicutionCount);
-  }	
-      private boolean isWithinMaxExecutionTime() {
-          long currentTime = System.currentTimeMillis();
-          long elapsedMinutes = (currentTime - startTime) / (1000 * 60);
-          return elapsedMinutes < maxExecutionMinutes;
-      }
+//	      System.out.println("Total Executions: " + exicutionCount);
+//	        System.out.println("Successful Executions: " + passedExicutionCount);
+//	        failedExicutionCount = exicutionCount - passedExicutionCount;
+//	        System.out.println("Failed Executions: " + failedExicutionCount);
+  
+//      private boolean isWithinMaxExecutionTime() {
+//          long currentTime = System.currentTimeMillis();
+//          long elapsedMinutes = (currentTime - startTime) / (1000 * 60);
+//          return elapsedMinutes < maxExecutionMinutes;
+//      }
 	
  	                         
     	  

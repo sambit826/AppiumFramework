@@ -41,10 +41,10 @@ public class Vysor implements DriverInterface {
 //        capabilities.setCapability("appActivity", "com.google.android.maps.MapsActivity");
 //        }
         capabilities.setCapability("automationName", "UiAutomator2");
-        if(udid.equals("72266245408932")) {
+        if(udid.equals("72266245408994")) {
         	 try {
              	url = new URL("http://localhost:4723/wd/hub");
-             	System.out.println("PORT 4724");
+             	System.out.println("PORT 4723");
              } catch (Exception e) {
                  e.printStackTrace();
              }

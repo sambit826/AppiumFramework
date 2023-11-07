@@ -72,19 +72,28 @@ public class ChromeBrowserPage extends BasePage {
 	@FindBy(xpath = "/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.Button")
 	private WebElement closeAllAppsBtn;
 	
-	@FindBy(xpath = "/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup/android.widget.FrameLayout[2]/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout")
+	@FindBy(xpath = "//android.widget.ImageButton[@content-desc=\"1 open tab, tap to switch tabs\"]")
 	private WebElement openTabsBtn;
 	
-	@FindBy(xpath = "//android.widget.TextView[@content-desc=\"Clear browsing data\"]")
+	@FindBy(xpath = "//android.widget.ImageButton[@content-desc=\"More options\"]")
 	private WebElement openTabOption;
 	
-	@FindBy(xpath = "/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.view.ViewGroup/android.widget.Button[2]")
+	@FindBy(xpath = "//android.widget.TextView[@content-desc=\"Close all tabs\"]")
 	private WebElement closeAllTabBtn;
+
+	@FindBy(xpath = "/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.view.ViewGroup/android.widget.Button[2]")
+	private WebElement closedTab;
 	
 	@FindBy(xpath = "/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup/android.widget.FrameLayout[1]/android.widget.FrameLayout[2]/android.webkit.WebView/android.view.View/android.view.View[3]/android.widget.TextView")
 	private WebElement pageNotFoundLink;
-		
-  
+	
+	@FindBy(xpath = "//android.support.v7.widget.RecyclerView[@content-desc=\"Explore this area\"]/android.widget.FrameLayout[1]/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup/android.widget.TextView")
+	private WebElement locationTextView;
+	
+	@FindBy(xpath = "//android.widget.FrameLayout[@content-desc=\"Enter compass mode\"]/android.widget.FrameLayout/android.widget.FrameLayout[2]/android.widget.ImageView")
+	private WebElement compassBtn;
+	
+	
 	public void openChromeBrowser() {
 		try {
 			if (continueAsSambitBtn.isDisplayed()) {
@@ -191,14 +200,27 @@ public class ChromeBrowserPage extends BasePage {
 		openTabOption.click();
 		waitForElement(closeAllTabBtn);
 		closeAllTabBtn.click();
+//		waitForElement(closedTab);
+//		closedTab.click();
 	}
-	public void scrollForTimeInTouchActionn(WebDriver driver, int timeInSeconds) {
-		try {
-		if(!pageNotFoundLink.isDisplayed()) {
-			scrollForTimeInTouchAction(driver, timeInSeconds);
-		}
-	 }catch(Exception e) {
-		 
+	 public void scrollForTimeInTouchAction(WebDriver driver,int durationInSeconds) {
+		 try {
+	    while(!pageNotFoundLink.isDisplayed()) {
+	    	long startTime = System.currentTimeMillis();
+ 	        long endTime =  (startTime + (durationInSeconds * 1000));
+ 	          while (System.currentTimeMillis() < endTime) {
+ 	    	   sleep(2);
+ 	    	     scrollInTouchAction(driver);
+ 	    }
+	    	}
+		 }catch(Exception e) {
+			// System.out.println("Not scrolling....");
+			 long startTime = System.currentTimeMillis();
+	 	        long endTime =  (startTime + (durationInSeconds * 1000));
+	 	          while (System.currentTimeMillis() < endTime) {
+	 	    	   sleep(2);
+	 	    	     scrollInTouchAction(driver);
+	 	          }
+ 	        }
 	 }
-	}
 }
