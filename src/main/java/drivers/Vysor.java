@@ -28,6 +28,7 @@ public class Vysor implements DriverInterface {
         capabilities.setCapability(MobileCapabilityType.UDID, udid);
 //        capabilities.setCapability("app", file.getAbsolutePath());
        // System.out.println(file.getAbsolutePath());
+        //capabilities.setCapability("systemPort", "4723");
         capabilities.setCapability("autoGrantPermissions", true); 
         capabilities.setCapability("appPackage", "com.google.android.apps.maps");
         capabilities.setCapability("appActivity", "com.google.android.maps.MapsActivity");
@@ -41,7 +42,7 @@ public class Vysor implements DriverInterface {
 //        capabilities.setCapability("appActivity", "com.google.android.maps.MapsActivity");
 //        }
         capabilities.setCapability("automationName", "UiAutomator2");
-        if(udid.equals("72266245408994")) {
+        if(udid.equals("72266245408932")) {
         	 try {
              	url = new URL("http://localhost:4723/wd/hub");
              	System.out.println("PORT 4723");

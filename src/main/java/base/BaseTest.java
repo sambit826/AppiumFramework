@@ -72,7 +72,7 @@ public class BaseTest extends SeleniumHelper {
 	@AfterMethod
 	public void afterMethod() {
 		System.out.println("Quiting driver: " + driver);
-		//driver.quit();
+		driver.quit();
 	}
 	
 	@DataProvider

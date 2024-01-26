@@ -72,10 +72,10 @@ public class ChromeBrowserPage extends BasePage {
 	@FindBy(xpath = "/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.Button")
 	private WebElement closeAllAppsBtn;
 	
-	@FindBy(xpath = "//android.widget.ImageButton[@content-desc=\"1 open tab, tap to switch tabs\"]")
+	@FindBy(xpath = "//android.widget.ImageButton[@content-desc=\"Switch or close tabs\"]")
 	private WebElement openTabsBtn;
 	
-	@FindBy(xpath = "//android.widget.ImageButton[@content-desc=\"More options\"]")
+	@FindBy(xpath = "//android.widget.ImageButton[@content-desc=\"Customize and control Google Chrome\"]")
 	private WebElement openTabOption;
 	
 	@FindBy(xpath = "//android.widget.TextView[@content-desc=\"Close all tabs\"]")
@@ -200,8 +200,8 @@ public class ChromeBrowserPage extends BasePage {
 		openTabOption.click();
 		waitForElement(closeAllTabBtn);
 		closeAllTabBtn.click();
-//		waitForElement(closedTab);
-//		closedTab.click();
+		waitForElement(closedTab);
+		closedTab.click();
 	}
 	 public void scrollForTimeInTouchAction(WebDriver driver,int durationInSeconds) {
 		 try {
@@ -209,7 +209,7 @@ public class ChromeBrowserPage extends BasePage {
 	    	long startTime = System.currentTimeMillis();
  	        long endTime =  (startTime + (durationInSeconds * 1000));
  	          while (System.currentTimeMillis() < endTime) {
- 	    	   sleep(2);
+ 	    	   sleep(1);
  	    	     scrollInTouchAction(driver);
  	    }
 	    	}
@@ -218,7 +218,7 @@ public class ChromeBrowserPage extends BasePage {
 			 long startTime = System.currentTimeMillis();
 	 	        long endTime =  (startTime + (durationInSeconds * 1000));
 	 	          while (System.currentTimeMillis() < endTime) {
-	 	    	   sleep(2);
+	 	    	   sleep(1);
 	 	    	     scrollInTouchAction(driver);
 	 	          }
  	        }

@@ -4,11 +4,12 @@
   <test thread-count="5" name="Test">
 	  <classes>
             <!-- Add class names here -->
-            <class name="test.GoogleMapTestCaseTest"/>
+            <class name="test.TC_1_GoogleMapTestDataForChicagoInjuryLawyer_33"/>
             <parameter name="deviceName" value="OPPO RENO NAPA"></parameter>
-            <parameter name="udid" value="72266245408994"></parameter>
+            <parameter name="udid" value="72266245408932"></parameter>
            
             <!-- Add more classes if needed -->
         </classes>
   </test> <!-- Test -->
 </suite> <!-- Suite -->
+ 

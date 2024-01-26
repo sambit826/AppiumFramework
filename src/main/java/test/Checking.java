@@ -6,14 +6,14 @@ import org.testng.annotations.Test;
 
 public class Checking {
 	  public static void main(String[] args) {
-	        double eastLongitude =  -73.451132;
-	        double westLongitude = -73.486818;
-	        double northLatitude = 41.335253;
-	        double southLatitude = 41.447884;
+	        double eastLongitude =  -70.8961020085398;
+	        double westLongitude =   -70.89819478414749;
+	        double eastLatitude = 42.1110311951435;
+	        double westLatitude = 41.99597421027852;
 
 	        // Generate random longitude and latitude within the specified range
 	        double randomLongitude = getRandomDouble(westLongitude, eastLongitude);
-	        double randomLatitude = getRandomDouble(southLatitude, northLatitude);
+	        double randomLatitude = getRandomDouble(eastLatitude, westLatitude);
 
 	        // Print the generated coordinates
 	        System.out.println("Random Longitude: " + randomLongitude);

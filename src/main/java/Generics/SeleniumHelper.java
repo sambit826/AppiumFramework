@@ -6,6 +6,8 @@ import static java.util.concurrent.TimeUnit.SECONDS;
 import static org.testng.Assert.ARRAY_MISMATCH_TEMPLATE;
 import static org.testng.Assert.fail;
 
+import java.io.File;
+import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.time.Duration;
@@ -14,12 +16,16 @@ import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.Random;
 import java.util.Set;
 import java.util.Timer;
 import java.util.TimerTask;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
+import org.apache.commons.exec.CommandLine;
+import org.apache.commons.exec.DefaultExecutor;
+import org.apache.commons.exec.ExecuteException;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Dimension;
 import org.openqa.selenium.JavascriptExecutor;
@@ -59,7 +65,7 @@ import io.appium.java_client.touch.WaitOptions;
 import io.appium.java_client.touch.offset.ElementOption;
 import io.appium.java_client.touch.offset.PointOption;
 import pages.GoogleMapPage;
-import test.GoogleMapTestCaseTest;
+import test.TC_1_GoogleMapTestDataForChicagoInjuryLawyer_33;
 import io.appium.java_client.TouchAction;
 import io.appium.java_client.android.AndroidDriver;
 
@@ -79,6 +85,14 @@ public class SeleniumHelper extends AutomationHelper {
 		wait.until(ExpectedConditions.visibilityOf(ele));
 		return true;
 	}
+	public void tap(int x, int y) {
+        PointerInput finger = new PointerInput(PointerInput.Kind.TOUCH, "finger");
+        Sequence tap = new Sequence(finger, 1);
+        tap.addAction(finger.createPointerMove(Duration.ofMillis(0), PointerInput.Origin.viewport(), x, y));
+        tap.addAction(finger.createPointerDown(PointerInput.MouseButton.LEFT.asArg()));
+        tap.addAction(finger.createPointerUp(PointerInput.MouseButton.LEFT.asArg()));
+        ((RemoteWebDriver) driver).perform(Arrays.asList(tap));
+    }
 	
 	public boolean waitForElement(WebElement ele, int timeInSec) {
 		WebDriverWait wait = new WebDriverWait(driver,
@@ -101,12 +115,50 @@ public class SeleniumHelper extends AutomationHelper {
 		((SupportsNetworkStateManagement) driver).toggleAirplaneMode();
 		sleep(1);
 		((SupportsNetworkStateManagement) driver).toggleAirplaneMode();
-		sleep(6);
+		sleep(8);
 		System.out.println("Network Restarting");
 	}
+	public  double[] generateRandomLocation(double givenLatitude, double givenLongitude, double distanceInMiles) {
+        Random random = new Random();
+
+        // Radius of the Earth in miles
+        double earthRadius = 3958.8;
+
+        // Convert distance from miles to radians
+        double distanceInRadians = distanceInMiles / earthRadius;
+
+        // Generate random angle in radians
+        double randomAngle = random.nextDouble() * 2 * Math.PI;
+
+        // Calculate new latitude and longitude
+        double newLatitude = Math.toDegrees(Math.asin(Math.sin(Math.toRadians(givenLatitude)) * Math.cos(distanceInRadians) +
+                Math.cos(Math.toRadians(givenLatitude)) * Math.sin(distanceInRadians) * Math.cos(randomAngle)));
+
+        double newLongitude = Math.toDegrees(Math.toRadians(givenLongitude) +
+                Math.atan2(Math.sin(randomAngle) * Math.sin(distanceInRadians) * Math.cos(Math.toRadians(givenLatitude)),
+                        Math.cos(distanceInRadians) - Math.sin(Math.toRadians(givenLatitude)) * Math.sin(Math.toRadians(newLatitude))));
+
+        return new double[]{newLatitude, newLongitude};
+    }
+
 
 	public void pressKeyboardKey(AndroidKey key) {
+		
 		((AndroidDriver) driver).pressKey(new KeyEvent(key));
+	}
+	
+	public void startAppium() {
+		Runtime rt = Runtime.getRuntime(); 
+		Process pr;
+		try {
+			pr = rt.exec("cmd /C start appium server  -p 4723 -a 127.0.0.1 -pa /wd/hub");
+			sleep(8);
+			//int exitValue=pr.exitValue();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} 
+		
 	}
 
 	public void scrollTillTime(double timeInMinute) {
@@ -455,6 +507,108 @@ public class SeleniumHelper extends AutomationHelper {
         	        }
         	      }
         	    }
+        
+        public static void startAppiumServer() {
+        	 String BATCH_FILE_DIRECTORY = "AppiumFramework/Resources";
+             String BATCH_FILE_NAME = "start_appium2.bat";
+            // Build the Appium start command with custom configurations
+             try {
+                 // Get the project's root directory
+                 String projectRoot = new File("").getAbsolutePath();
+
+                 // Construct the directory path to the batch file
+                 String batchFileDirectory = projectRoot + File.separator + BATCH_FILE_DIRECTORY;
+
+                 // Construct the absolute path to the batch file
+                 String absolutePath = batchFileDirectory + File.separator + BATCH_FILE_NAME;
+
+                 // Build the Appium start command with custom configurations
+                 CommandLine command = new CommandLine("cmd").addArgument("/c").addArgument(absolutePath);
+
+                 // Execute the command
+                 DefaultExecutor executor = new DefaultExecutor();
+                 executor.setWorkingDirectory(new File(batchFileDirectory));
+                 executor.execute(command);
+
+                 System.out.println("Appium server started successfully.");
+             } catch (ExecuteException e) {
+                 e.printStackTrace();
+             } catch (Exception e) {
+                 e.printStackTrace();
+             }
+
+
+        }
+              public void executeCommand(String command) {
+                  try {
+                      // Execute the command
+                      Process process = Runtime.getRuntime().exec(command);
+
+                      // Wait for the command to complete (optional)
+                      int exitCode = process.waitFor();
+
+                      // Print the command output (optional)
+                      // BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
+                      // String line;
+                      // while ((line = reader.readLine()) != null) {
+                      //     System.out.println(line);
+                      // }
+
+                      // Check if the command was successful
+                      if (exitCode == 0) {
+                          System.out.println("Command executed successfully");
+                      } else {
+                          System.err.println("Error executing command");
+                      }
+                  } catch (IOException | InterruptedException e) {
+                      e.printStackTrace();
+                  }
+            // Execute the command
+//            DefaultExecutor executor = new DefaultExecutor();
+//            try {
+//                executor.execute(command);
+//                System.out.println("Appium server started successfully.");
+//            } catch (ExecuteException e) {
+//                e.printStackTrace();
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//            }
+        }
+              public void executeBatchFile(String batchFilePath) {
+                  try {
+                      // Build the command to execute the batch file
+                      String command = "cmd /c start /wait " + batchFilePath;
+
+                      // Execute the command
+                      Process process = Runtime.getRuntime().exec(command);
+
+                      // Wait for the process to complete
+                      int exitCode = process.waitFor();
+
+                      // Check if the execution was successful
+                      if (exitCode == 0) {
+                          System.out.println("Batch file executed successfully.");
+                      } else {
+                          System.err.println("Error executing batch file.");
+                      }
+                  } catch (IOException | InterruptedException e) {
+                      e.printStackTrace();
+                  }
+              }
+        
+        public  void stopAppiumServer() {
+            // Build the Appium stop command
+        	Runtime rt = Runtime.getRuntime(); 
+    		Process pr;
+    		try {
+    			pr = rt.exec("cmd /C start taskkill /F /IM node.exe");
+    			sleep(5);
+    			//int exitValue=pr.exitValue();
+    		} catch (IOException e) {
+    			// TODO Auto-generated catch block
+    			e.printStackTrace();
+    		} 
+        }
         	    public void scrollForTimeInTouchAction(WebDriver driver,int durationInSeconds) {
         	    	WebElement pageNotFoundLink = driver.findElement(By.xpath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup/android.widget.FrameLayout[1]/android.widget.FrameLayout[2]/android.webkit.WebView/android.view.View/android.view.View[3]/android.widget.TextView"));
         	       
